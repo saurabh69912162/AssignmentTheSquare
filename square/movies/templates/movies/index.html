@@ -1,0 +1,82 @@
+{% extends 'movies/base.html' %}
+{% block content %}
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+input[type=text] {
+  width: 830px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+  width: 100%;
+}
+</style>
+</head>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">TheSqua.re Movie Application</h1>
+    <p class="lead">Demo App</p>
+  </div>
+</div>
+
+
+
+
+<div class="container">
+
+
+
+
+
+
+<div  class="col-12" style="margin:20px;text-align: center; ">
+<h2>Search movies</h2>
+
+        <div class="container">
+<form style="margin:50px" action="/search" method="POST">
+    {% csrf_token %}
+  <input type="text" name="search" placeholder="Search...">
+</form>
+
+</div>
+
+    <h2>Movies This Month</h2>
+    <hr>
+<div class="row" >
+
+    {%for x in all_movies%}
+  <div class="col-sm-4" >
+    <div class="card" >
+        <img class="card-img-top" style="height: 300px;" src="{{x.image.url}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{x.movie_name}}</h5>
+
+        <p class="card-text">Rating - {{x.rating}}</p>
+          <p class="card-text">Director - {{x.director}}</p>
+            <p class="card-text"><small class="text-muted">Release Date - {{x.year}}</small></p>
+        <a href="{% url 'details' x.id %}" class="btn btn-primary">Explore</a>
+          <a href="{{x.imdb_url}}" target="_blank" class="btn btn-info">View at IMDB</a>
+      </div>
+    </div>
+  </div>
+
+
+        {%endfor%}
+
+    </div>
+
+</div>
+{%endblock%}
